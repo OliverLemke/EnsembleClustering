@@ -20,7 +20,8 @@ from sklearn.cluster import KMeans
 import CNN
 #import hdbscan
 
-# General funtion that can use a label vector needed for transferability!!!
+# General function that can use a label vector needed for transferability!!!
+## Construct Coclustering Matrix
 
 path = pathlib.Path().absolute()
 
@@ -138,6 +139,55 @@ def Ensemble_CNN(Data, Rs, Ns, M, full_list=False):
 #    if full_list:
 #        Ensemble_dict.update({"Clusters stepwise":Cluster_list_full})
 #    return Ensemble_dict
+
+def get_coclustering_from_labels(labels):
+    """
+    Get the Coclustering matrix for one clustering step.
+
+    Parameters
+    ----------
+    labels : arr
+        labels for every data point.
+
+    Returns
+    -------
+    Cluster_list : list of arr
+        list containg datapoints assigned per cluster as element.
+    coclustering : arr
+        Quadratic coclustering matrix for one clustering approach.
+    """
+    
+    Cluster_list = [np.where(labels==label)[0] for label in np.unique(labels)]            
+    coclustering = np.zeros((len(labels),len(labels)))
+    for cluster in Cluster_list:
+        x, y = np.meshgrid(cluster,cluster)
+        coclustering[x,y]+=1
+    return Cluster_list, coclustering
+
+def get_coclustering_from_cluster_list(Cluster_list, num_Datapoints=None):
+    """
+    Get the Coclustering matrix for one clustering step.
+
+    Parameters
+    ----------
+    Cluster_list : list of arr
+        list containg datapoints assigned per cluster as element.
+    num_Datapoints : int, optional
+        Number of datapoints (needed if noise is removed during the clustering)
+
+    Returns
+    -------
+    coclustering : arr
+        Quadratic coclustering matrix for one clustering approach.
+    """
+    
+    if not num_Datapoints:
+        num_Datapoints = np.max([el for cluster in Cluster_list for el in cluster])+1
+    coclustering = np.zeros((num_Datapoints,num_Datapoints))
+    for cluster in Cluster_list:
+        x, y = np.meshgrid(cluster,cluster)
+        coclustering[x,y]+=1
+    return coclustering
 
 def get_neighborlist_tree(Tree,R):
     """
