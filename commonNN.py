@@ -17,7 +17,7 @@ import Color_Mix
 
 path = pathlib.Path().absolute()
 
-def CNN(Data,R,N,M,Ensemble=False,neighborlist=None,number_neighbors=None):
+def commonNN(Data,R,N,M,Ensemble=False,neighborlist=None,number_neighbors=None):
     """
     Common-Nearest-Neighbor Clustering
 
@@ -97,7 +97,7 @@ def noise_filter(number_neighbors,M):
     number_neighbors[number_neighbors<M]=0
     return number_neighbors
 
-def Cluster_assignment(neighborlist,number_neighbors, N):
+def cluster_assignment(neighborlist,number_neighbors, N):
     """
     Assign data points for a single cluster (Cluster initialisaton and expansion for data point with most neighbors)
 
@@ -123,7 +123,7 @@ def Cluster_assignment(neighborlist,number_neighbors, N):
                       if len(np.intersect1d(neighborlist[current],neighborlist[neighbor])) >= N]    
     return current_cluster
 
-def Clustering(neighborlist,number_neighbors, N):
+def clustering(neighborlist,number_neighbors, N):
     """
     Clustering of the data points
 
