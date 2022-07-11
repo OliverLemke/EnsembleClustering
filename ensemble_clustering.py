@@ -15,9 +15,9 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib as mpl
 import seaborn as sns
-import Color_Mix
+import color_mix
 from sklearn.cluster import KMeans
-import CNN
+import commonNN
 #import hdbscan
 
 # General function that can use a label vector needed for transferability!!!
@@ -25,7 +25,7 @@ import CNN
 
 path = pathlib.Path().absolute()
 
-def Ensemble_kMeans(Data,ks):
+def ensemble_kMeans(Data,ks):
     """
     Ensemble Clustering using kMeans.
 
@@ -54,7 +54,7 @@ def Ensemble_kMeans(Data,ks):
         norm +=1
     return coclustering/norm   
 
-# def Ensemble_hDBSCAN(Data,Min_cluster_size,Min_samples):
+# def ensemble_hDBSCAN(Data,Min_cluster_size,Min_samples):
 #     coclustering = np.zeros((len(Data),len(Data)))
 #     norm = 0
 #     for min_cluster_size in Min_cluster_size:
@@ -68,7 +68,7 @@ def Ensemble_kMeans(Data,ks):
 #             norm +=1
 #     return coclustering/norm   
 
-def Ensemble_CNN(Data, Rs, Ns, M, full_list=False):
+def ensemble_CNN(Data, Rs, Ns, M, full_list=False):
     """
     Ensemble Clustering using Common-Nearest-Neighbor algorithm.
 
@@ -121,7 +121,7 @@ def Ensemble_CNN(Data, Rs, Ns, M, full_list=False):
                     norm +=1
         return coclustering/norm
     
-#def Ensemble_CNN_auto(Data,Rs,Ns,M, Noise_level = 0.7, Cluster_difference = 0.5, full_list=False, output="Clusters.png"):
+#def ensemble_CNN_auto(Data,Rs,Ns,M, Noise_level = 0.7, Cluster_difference = 0.5, full_list=False, output="Clusters.png"):
 #    
 #    if full_list:
 #        Coclustering, Cluster_list_full = Ensemble_CNN(Data, Rs, Ns, M, full_list=full_list)
@@ -230,7 +230,7 @@ def get_distance_matrix(Data):
     dist = spatial.distance_matrix(Data,Data)
     return dist
 
-def Cluster_Cooccurence(Coclustering, Noise_level=0.7, cmap=cm.magma_r, output="Clustering_Coclustering.png"):
+def cluster_cooccurence(Coclustering, Noise_level=0.7, cmap=cm.magma_r, output="Clustering_Coclustering.png"):
     """
     Clustering of the Coclustering matrix using hierarchical Ward clustering.
 
@@ -360,7 +360,7 @@ def get_outliers(Data, Cluster_list):
     Outliers = [item for item in all_datapoints if item not in assigned_datapoints]
     return Outliers
 
-def plot_Cluster_assignment(Map, Cluster_list, cmap=cm.magma_r, output="Coclustering_clustered.png"):
+def plot_cluster_assignment(Map, Cluster_list, cmap=cm.magma_r, output="Coclustering_clustered.png"):
     """
     Plot the cocluster cluster assignment.
 
