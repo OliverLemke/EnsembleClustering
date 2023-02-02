@@ -49,7 +49,7 @@ def commonNN(Data,R,N,M,Ensemble=False,neighborlist=None,number_neighbors=None):
     else:
         neighborlist, number_neighbors = get_neighborlist(Data, R)
     number_neighbors = noise_filter(number_neighbors, M)
-    Cluster_list = Clustering(neighborlist,number_neighbors, N)
+    Cluster_list = clustering(neighborlist,number_neighbors, N)
     Cluster_list_filter = [cluster for cluster in Cluster_list if len(cluster)>=M]
     return Cluster_list_filter
 
@@ -144,7 +144,7 @@ def clustering(neighborlist,number_neighbors, N):
     """
     Cluster_list=[]
     while np.sum(number_neighbors!=0):
-        Cluster = Cluster_assignment(neighborlist,number_neighbors, N)
+        Cluster = cluster_assignment(neighborlist,number_neighbors, N)
         number_neighbors[Cluster]=0
         Cluster_list.append(Cluster)
     return Cluster_list
