@@ -100,7 +100,7 @@ def ensemble_CNN(Data, Rs, Ns, M, full_list=False):
             neighborlist, number_neighbors = get_neighborlist_tree(Tree, R)
             for N in Ns:
                 nc = np.copy(number_neighbors)
-                Cluster_list = commonNN.CNN(Data, R, N, M, Ensemble=True, neighborlist=neighborlist, number_neighbors=nc)
+                Cluster_list = commonNN.commonNN(Data, R, N, M, Ensemble=True, neighborlist=neighborlist, number_neighbors=nc)
                 for cluster in Cluster_list:
                     x, y = np.meshgrid(cluster,cluster)
                     coclustering[x,y]+=1
@@ -113,7 +113,7 @@ def ensemble_CNN(Data, Rs, Ns, M, full_list=False):
             neighborlist, number_neighbors = get_neighborlist_tree(Tree, R)
             for N in Ns:
                 nc = np.copy(number_neighbors)
-                Cluster_list = commonNN.CNN(Data, R, N, M, Ensemble=True, neighborlist=neighborlist, number_neighbors=nc)
+                Cluster_list = commonNN.commonNN(Data, R, N, M, Ensemble=True, neighborlist=neighborlist, number_neighbors=nc)
                 for cluster in Cluster_list:
                     x, y = np.meshgrid(cluster,cluster)
                     coclustering[x,y]+=1
